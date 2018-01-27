@@ -80,7 +80,7 @@ public class TrackedConnection extends Connection{
 		}
 	}
 	
-	protected UserIdentifier receiveUserIdentifier() {
+	private UserIdentifier receiveUserIdentifier() {
 		
 		try {
 			inStream = new ObjectInputStream(clientSocket.getInputStream());

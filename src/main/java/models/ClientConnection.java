@@ -2,12 +2,14 @@ package models;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import DAO.MongoDAO;
 import DTO.Point;
 import DTO.User;
 import DTO.UserIdentifier;
+import util.DatingBirthday;
 
 public class ClientConnection extends Connection {
 
@@ -22,8 +24,7 @@ public class ClientConnection extends Connection {
 			
 			Object objectX = receivingObject();
 			
-			//logar
-			
+		
 			if(objectX instanceof UserIdentifier) {
 			
 				userIdentifier = (UserIdentifier) objectX;
@@ -36,7 +37,6 @@ public class ClientConnection extends Connection {
 				}
 			}
 			
-			//cadastrar
 			
 			if(objectX instanceof String) {
 				User newClient = receiveNewClient();
@@ -46,8 +46,35 @@ public class ClientConnection extends Connection {
 	}
 	
 	private void startComunication() {
-		
-		
+		//
+		// while(true) enviando posição do usuário para o cliente
+		while(true) {
+			
+			String request = receiveRequest();
+			
+			if(request.equals("currentPostion")){
+				
+				sendCurrentPosition();
+				
+			}
+			if(request.equals("notification")) {
+				
+				//Aqui meu caro tavinho e com você e deus
+				
+			}
+		}
+	}
+
+	private void sendCurrentPosition() {
+		try {
+			outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+
+			Point currentPosition = MongoDAO.getInstance().getcurrentPosition(userIdentifier.getUserEmail());
+			outputStream.writeObject(currentPosition);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private User receiveNewClient() {
@@ -77,4 +104,19 @@ public class ClientConnection extends Connection {
 			return null;
 		}
 	}
+	
+	private String receiveRequest() {
+		try {
+			String request = new String();
+			inStream = new ObjectInputStream(clientSocket.getInputStream());
+			request = (String)inStream.readObject();
+			return request;
+			
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
 }

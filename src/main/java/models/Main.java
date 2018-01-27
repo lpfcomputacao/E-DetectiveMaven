@@ -28,21 +28,25 @@ public class Main {
         
         User objTeste = new User();
 
+      
         for (Document document : resultadoDaBusca) {
             objTeste = new Gson().fromJson(document.toJson(), User.class);
-            BasicDBObject key = new BasicDBObject("email", "sarah@gmail.com");
-            BasicDBObject latitude = new BasicDBObject("markerPosition.latitude", Double.toString(23452345.12));
-            BasicDBObject longitude = new BasicDBObject("markerPosition.longitude", Double.toString(1234.12));
-            
-            BasicDBObject newPoint = new BasicDBObject("$set", latitude);
-            users.updateOne(key, newPoint);
-            newPoint = new BasicDBObject("$set", longitude);
-            users.updateOne(key,newPoint);
- 
-            
+            if(objTeste.getEmail().equals("sarah@gmail.com")) {
+            	
+            	BasicDBObject key = new BasicDBObject("email", "sarah@gmail.com");
+                BasicDBObject latitude = new BasicDBObject("currentPosition.latitude", Double.toString(22.222));
+                BasicDBObject longitude = new BasicDBObject("currentPosition.longitude", Double.toString(22.222));
+                
+                BasicDBObject newPoint = new BasicDBObject("$set", latitude);
+                users.updateOne(key, newPoint);
+                newPoint = new BasicDBObject("$set", longitude);
+                users.updateOne(key,newPoint);
+               
+            	
+            }
         }
- 
         mongo.close();
+       
 		
 //		startRunnable(trackedListener);
 //		startRunnable(clientListener);

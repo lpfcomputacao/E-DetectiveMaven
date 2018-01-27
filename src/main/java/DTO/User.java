@@ -15,32 +15,18 @@ public class User implements Serializable{
 	private DatingBirthday datingDate;
 	
 	private Point markerPosition;
+	private Point currentPosition;
 
-//	{
-//		"name" : "Sarah",
-//		"password" : "lucass2",
-//		"email" : "sarah@gmail.com",
-//		"datingDate" : {
-//			"year" : "2014",
-//			"month" : "6",
-//			"day" : "1"
-//		},
-//		"markerPosition" : {
-//			"latitude" : "42.5455",
-//			"longitude" : "22.545"
-//		}
-//	}
-		
-	
 	
 	public User() {}
 	
-	public User(String name, String password, String userName, DatingBirthday datingDate, Point markersPositions) {
+	public User(String name, String password, String email, DatingBirthday datingDate, Point markerPosition, Point currentPosition) {
 		this.name = name;
 		this.password = password;
-		this.email = userName;
+		this.email = email;
 		this.datingDate = datingDate;
 		this.markerPosition = markerPosition;
+		this.setCurrentPosition(currentPosition);
 		
 	}
 	
@@ -84,4 +70,13 @@ public class User implements Serializable{
 	public void setMarkerPosition(Point markerPosition) {
 		this.markerPosition = markerPosition;
 	}
+
+	public Point getCurrentPosition() {
+		return currentPosition;
+	}
+
+	public void setCurrentPosition(Point currentPosition) {
+		this.currentPosition = currentPosition;
+	}
+	
 }

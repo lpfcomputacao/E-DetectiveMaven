@@ -87,9 +87,14 @@ public class MongoDAO {
 		BasicDBObject point = new BasicDBObject();
 		point.put("latitude", newUser.getMarkerPosition().getX());
 		point.put("longitude", newUser.getMarkerPosition().getY());
+		
+		BasicDBObject currentPoint = new BasicDBObject();
+		point.put("latitude", 0);
+		point.put("longitude", 0);
 
 		User.put("datingDate", datingDate);
 		User.put("markerPosition", point);
+		User.put("currentPoint",currentPoint);
 
 		users.insertOne(User);
 		
@@ -108,13 +113,13 @@ public class MongoDAO {
             if(objTeste.getEmail().equals(userEmail)) {
             	
             	BasicDBObject key = new BasicDBObject("email", userEmail);
-                BasicDBObject latitude = new BasicDBObject("markerPosition.latitude", Double.toString(point.getX()));
-                BasicDBObject longitude = new BasicDBObject("markerPosition.longitude", Double.toString(point.getY()));
+                BasicDBObject latitude = new BasicDBObject("currentPosition.latitude", Double.toString(point.getX()));
+                BasicDBObject longitude = new BasicDBObject("currentPosition.longitude", Double.toString(point.getY()));
                 
                 BasicDBObject newPoint = new BasicDBObject("$set", latitude);
-                users.updateOne(key,new BasicDBObject("$set", newPoint));
+                users.updateOne(key,newPoint);
                 newPoint = new BasicDBObject("$set", longitude);
-                users.updateOne(key,new BasicDBObject("$set", newPoint));
+                users.updateOne(key, newPoint);
                 
             	mongo.close();
             	return;
@@ -130,7 +135,23 @@ public class MongoDAO {
 	private static class MongoDAOHolder{
 		private static final MongoDAO INSTANCE = new MongoDAO();
 	}
-	
-	
-	
+
+	public Point getcurrentPosition(String userEmail) {
+		initializeMongoDB();
+        
+        FindIterable<Document> resultadoDaBusca = users.find();
+        User objTeste = new User();
+ 	
+        for (Document document : resultadoDaBusca) {
+            objTeste = new Gson().fromJson(document.toJson(), User.class);
+            if(objTeste.getEmail().equals(userEmail)) {
+            	mongo.close();
+            	return objTeste.getCurrentPosition();
+            }
+        }
+ 
+        mongo.close();
+        return null;
+	}
+
 }
