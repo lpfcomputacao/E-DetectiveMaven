@@ -9,6 +9,7 @@ import DAO.MongoDAO;
 import DTO.Point;
 import DTO.User;
 import DTO.UserIdentifier;
+import log.Log;
 import util.DatingBirthday;
 
 public class ClientConnection extends Connection {
@@ -73,7 +74,7 @@ public class ClientConnection extends Connection {
 			outputStream.writeObject(currentPosition);
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.getInstance().writeOnLog("Não foi possível enviar a posição atual", e.getStackTrace());
 		}
 	}
 
@@ -85,8 +86,11 @@ public class ClientConnection extends Connection {
 			newUser = (User)inStream.readObject();
 			return newUser;
 			
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
+		} catch (IOException e) {
+			Log.getInstance().writeOnLog("Não foi possível receber a classe do cliente", e.getStackTrace());
+			return null;
+		} catch (ClassNotFoundException e) {
+			Log.getInstance().writeOnLog("Não foi encontrada uma classe User comaptível com o objeto recebido", e.getStackTrace());
 			return null;
 		}
 	}
@@ -99,8 +103,11 @@ public class ClientConnection extends Connection {
 			object = (Object)inStream.readObject();
 			return object;
 			
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
+		} catch (IOException e) {
+			Log.getInstance().writeOnLog("Objeto da rede não recebido", e.getStackTrace());
+			return null;
+		} catch (ClassNotFoundException e) {
+			Log.getInstance().writeOnLog("Não foi encontrada uma classe Object comaptível com o objeto recebido", e.getStackTrace());
 			return null;
 		}
 	}
@@ -112,8 +119,11 @@ public class ClientConnection extends Connection {
 			request = (String)inStream.readObject();
 			return request;
 			
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
+		} catch (IOException e) {
+			Log.getInstance().writeOnLog("Não foi possível receber a requisição do usuário", e.getStackTrace());
+			return null;
+		} catch (ClassNotFoundException e) {
+			Log.getInstance().writeOnLog("Classe recebida não compatível com String", e.getStackTrace());
 			return null;
 		}
 		
