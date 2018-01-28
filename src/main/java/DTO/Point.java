@@ -1,33 +1,32 @@
 package DTO;
 import java.io.Serializable;
-import java.math.BigDecimal;
+public class Point implements Serializable{/**
+ *
+ */
+    private static final long serialVersionUID = 1L;
+    private double latitude;
+    private double longitude;
 
-public class Point implements Serializable{
+    public Point () {}
 
-	private static final long serialVersionUID = -3731110997053754839L;
-	private double latitude;
-	private double longitude;
-	
-	public Point () {}
-	
-	public Point(double x, double y) {
-		this.latitude = x;
-		this.longitude = y;
-	}
-	
-	public double getX() {
-		return latitude;
-	}
+    public Point(double x, double y) {
+        this.latitude = x;
+        this.longitude = y;
+    }
 
-	public void setX(double x) {
-		this.latitude = x;
-	}
+    public double getX() {
+        return latitude;
+    }
 
-	public double getY() {
-		return longitude;
-	}
+    public void setX(double x) {
+        this.latitude = x;
+    }
 
-	public void setY(double y) {
-		this.longitude = y;
-	}
+    public double getY() {
+        return longitude;
+    }
+
+    public void setY(double y) {
+        this.longitude = y;
+    }
 }

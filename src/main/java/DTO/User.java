@@ -1,82 +1,81 @@
 package DTO;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.ArrayList;
-
 import util.DatingBirthday;
 
 public class User implements Serializable{
-	
-	//private static final long serialVersionUID = -8880802417791340522L;
-	private String name;
-	private String password;
-	private String email;
-	private DatingBirthday datingDate;
-	
-	private Point markerPosition;
-	private Point currentPosition;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    private String name;
+    private String password;
+    private String email;
+    private DatingBirthday datingDate;
 
-	
-	public User() {}
-	
-	public User(String name, String password, String email, DatingBirthday datingDate, Point markerPosition, Point currentPosition) {
-		this.name = name;
-		this.password = password;
-		this.email = email;
-		this.datingDate = datingDate;
-		this.markerPosition = markerPosition;
-		this.setCurrentPosition(currentPosition);
-		
-	}
-	
-    
-	public String getName() {
-		return name;
-	}
+    private Point markerPosition;
+    private Point currentPosition;
 
-	public void setName(String name) {
-		this.name = name;
-	}
 
-	public String getPassword() {
-		return password;
-	}
+    public User() {}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public User(String name, String password, String email, DatingBirthday datingDate, Point markerPosition, Point currentPosition) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.datingDate = datingDate;
+        this.markerPosition = markerPosition;
+        this.setCurrentPosition(currentPosition);
 
-	public String getEmail() {
-		return email;
-	}
+    }
 
-	public void setEmail(String userName) {
-		this.email = userName;
-	}
 
-	public DatingBirthday getDatingDate() {
-		return datingDate;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setDatingDate(DatingBirthday datingDate) {
-		this.datingDate = datingDate;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Point getMarkerPosition() {
-		return markerPosition;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setMarkerPosition(Point markerPosition) {
-		this.markerPosition = markerPosition;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public Point getCurrentPosition() {
-		return currentPosition;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setCurrentPosition(Point currentPosition) {
-		this.currentPosition = currentPosition;
-	}
-	
+    public void setEmail(String userName) {
+        this.email = userName;
+    }
+
+    public DatingBirthday getDatingDate() {
+        return datingDate;
+    }
+
+    public void setDatingDate(DatingBirthday datingDate) {
+        this.datingDate = datingDate;
+    }
+
+    public Point getMarkerPosition() {
+        return markerPosition;
+    }
+
+    public void setMarkerPosition(Point markerPosition) {
+        this.markerPosition = markerPosition;
+    }
+
+    public Point getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public void setCurrentPosition(Point currentPosition) {
+        this.currentPosition = currentPosition;
+    }
+
 }
