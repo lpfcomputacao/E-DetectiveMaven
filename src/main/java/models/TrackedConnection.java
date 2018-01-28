@@ -46,7 +46,7 @@ public class TrackedConnection extends Connection{
 	private void startComunication() {
 		
 		sendDatingBirthday();
-		receivePoints();
+		//receivePoints();
 	}
 
 	private void sendDatingBirthday() {

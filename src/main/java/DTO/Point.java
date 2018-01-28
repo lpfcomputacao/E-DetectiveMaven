@@ -1,10 +1,12 @@
 package DTO;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 public class Point implements Serializable{
-
-	private static final long serialVersionUID = -3731110997053754839L;
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private double latitude;
 	private double longitude;
 	

@@ -32,11 +32,12 @@ public abstract class Listener implements Runnable {
 
 	protected void connectionExpector() {
 		try {
-
+			System.out.println("aeee");
 			Socket socket = serverSocket.accept();
 
 			switch (serverSocket.getLocalPort()) {
 			case 5001:
+				System.out.println("aeee");
 				TrackedConnection trackedConnection = new TrackedConnection(socket);
 				startThreadConnection(trackedConnection);
 				break;

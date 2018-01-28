@@ -1,14 +1,14 @@
 package DTO;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.ArrayList;
-
 import util.DatingBirthday;
 
 public class User implements Serializable{
 	
-	//private static final long serialVersionUID = -8880802417791340522L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String password;
 	private String email;

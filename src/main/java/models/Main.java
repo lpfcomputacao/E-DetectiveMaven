@@ -15,40 +15,40 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-//		TrackedListener trackedListener = new TrackedListener();
+		TrackedListener trackedListener = new TrackedListener();
 //		ClientListener clientListener = new  ClientListener();
 //		DetectivesManager detectiveManager = new DetectivesManager();
 		
 		
-		MongoClient mongo = new MongoClient( "localhost" , 27017 );
-        MongoDatabase database = mongo.getDatabase("Detective");
-        MongoCollection users = database.getCollection("Users");
-        
-        FindIterable<Document> resultadoDaBusca = users.find();
-        
-        User objTeste = new User();
-
-      
-        for (Document document : resultadoDaBusca) {
-            objTeste = new Gson().fromJson(document.toJson(), User.class);
-            if(objTeste.getEmail().equals("sarah@gmail.com")) {
-            	
-            	BasicDBObject key = new BasicDBObject("email", "sarah@gmail.com");
-                BasicDBObject latitude = new BasicDBObject("currentPosition.latitude", Double.toString(22.222));
-                BasicDBObject longitude = new BasicDBObject("currentPosition.longitude", Double.toString(22.222));
-                
-                BasicDBObject newPoint = new BasicDBObject("$set", latitude);
-                users.updateOne(key, newPoint);
-                newPoint = new BasicDBObject("$set", longitude);
-                users.updateOne(key,newPoint);
-               
-            	
-            }
-        }
-        mongo.close();
+//		MongoClient mongo = new MongoClient( "localhost" , 27017 );
+//        MongoDatabase database = mongo.getDatabase("Detective");
+//        MongoCollection users = database.getCollection("Users");
+//        
+//        FindIterable<Document> resultadoDaBusca = users.find();
+//        
+//        User objTeste = new User();
+//
+//      
+//        for (Document document : resultadoDaBusca) {
+//            objTeste = new Gson().fromJson(document.toJson(), User.class);
+//            if(objTeste.getEmail().equals("sarah@gmail.com")) {
+//            	
+//            	BasicDBObject key = new BasicDBObject("email", "sarah@gmail.com");
+//                BasicDBObject latitude = new BasicDBObject("currentPosition.latitude", Double.toString(22.222));
+//                BasicDBObject longitude = new BasicDBObject("currentPosition.longitude", Double.toString(22.222));
+//                
+//                BasicDBObject newPoint = new BasicDBObject("$set", latitude);
+//                users.updateOne(key, newPoint);
+//                newPoint = new BasicDBObject("$set", longitude);
+//                users.updateOne(key,newPoint);
+// 
+//            	
+//            }
+//        }
+//        mongo.close();
        
 		
-//		startRunnable(trackedListener);
+		startRunnable(trackedListener);
 //		startRunnable(clientListener);
 //		startRunnable(detectiveManager);
 		

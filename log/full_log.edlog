@@ -1,0 +1,10 @@
+2018-01-28 - 12:24:30
+Não foi possível receber dados do cliente.
+java.io.ObjectInputStream$PeekInputStream.readFully(ObjectInputStream.java:2671)
+java.io.ObjectInputStream$BlockDataInputStream.readShort(ObjectInputStream.java:3146)
+java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:858)
+java.io.ObjectInputStream.<init>(ObjectInputStream.java:354)
+models.TrackedConnection.receiveUserIdentifier(TrackedConnection.java:90)
+models.TrackedConnection.run(TrackedConnection.java:29)
+java.lang.Thread.run(Thread.java:748)
+
