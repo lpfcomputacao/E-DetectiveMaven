@@ -1,6 +1,8 @@
 package DTO;
 
 import java.io.Serializable;
+import java.util.Objects;
+
 import util.DatingBirthday;
 
 public class User implements Serializable{
@@ -77,5 +79,15 @@ public class User implements Serializable{
     public void setCurrentPosition(Point currentPosition) {
         this.currentPosition = currentPosition;
     }
-
+    @Override
+    public int hashCode() {
+    	return Objects.hash(email, password);
+    }
+    @Override
+    public boolean equals(Object obj) {
+    	if(this.email.equals(((User)obj).getEmail())) {
+    		return true;
+    	}
+    	return false;
+    }
 }

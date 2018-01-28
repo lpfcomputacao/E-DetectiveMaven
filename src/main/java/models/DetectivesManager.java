@@ -35,7 +35,7 @@ public class DetectivesManager implements Runnable {
 					User user = null;
 					try {
 						Thread.sleep(30000);
-						// Aqui o Lucas fica procurando os novos usuários no banco de dados7
+						// Aqui o Lucas fica procurando os novos usuários no banco de dados
 						//if(achou usuário){
 							creatDetective(user);
 					} catch (InterruptedException e) {
