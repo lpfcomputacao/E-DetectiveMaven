@@ -54,7 +54,6 @@ public class TrackedConnection extends Connection{
 			outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
 
 			DatingBirthday date = MongoDAO.getInstance().getDatingBirthdayDB(userIdentifier.getUserEmail());
-			System.out.println(date.getDay());
 			outputStream.writeObject(date);
 
 		} catch (IOException e) {

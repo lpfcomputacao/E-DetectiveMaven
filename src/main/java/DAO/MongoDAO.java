@@ -1,5 +1,7 @@
 package DAO;
 
+import java.util.ArrayList;
+
 import org.bson.Document;
 
 import com.google.gson.Gson;
@@ -152,6 +154,40 @@ public class MongoDAO {
  
         mongo.close();
         return null;
+	}
+
+	public User getUser(String email) {
+		initializeMongoDB();
+        
+        FindIterable<Document> resultadoDaBusca = users.find();
+        User objTeste = new User();
+ 	
+        for (Document document : resultadoDaBusca) {
+            objTeste = new Gson().fromJson(document.toJson(), User.class);
+            if(objTeste.getEmail().equals(email)) {
+            	mongo.close();
+            	return objTeste;
+            }
+        }
+ 
+        mongo.close();
+        return null;
+	}
+
+	public ArrayList<User> returnDBUsers() {
+		initializeMongoDB();
+        
+        FindIterable<Document> resultadoDaBusca = users.find();
+        User objTeste = new User();
+        ArrayList<User> userList = null;
+ 	
+        for (Document document : resultadoDaBusca) {
+            objTeste = new Gson().fromJson(document.toJson(), User.class);
+            userList.add(objTeste);
+        }
+ 
+        mongo.close();
+        return userList;
 	}
 
 }

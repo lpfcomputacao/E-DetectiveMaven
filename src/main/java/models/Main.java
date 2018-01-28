@@ -16,13 +16,13 @@ public class Main {
 	public static void main(String[] args) {
 		
 		TrackedListener trackedListener = new TrackedListener();
-//		ClientListener clientListener = new  ClientListener();
+		ClientListener clientListener = new  ClientListener();
 //		DetectivesManager detectiveManager = new DetectivesManager();
 		
 		
 		
 		startRunnable(trackedListener);
-//		startRunnable(clientListener);
+		startRunnable(clientListener);
 //		startRunnable(detectiveManager);
 		
 	}

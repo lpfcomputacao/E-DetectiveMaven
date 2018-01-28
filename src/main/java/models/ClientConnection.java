@@ -20,14 +20,13 @@ public class ClientConnection extends Connection {
 
 	@Override
 	public void run() {
-
 		while(true) {
 			
 			Object objectX = receivingObject();
 			
 		
 			if(objectX instanceof UserIdentifier) {
-			
+				System.out.println("useridentifier");
 				userIdentifier = (UserIdentifier) objectX;
 			
 				if(MongoDAO.getInstance().userValidator(userIdentifier)) {
@@ -49,12 +48,12 @@ public class ClientConnection extends Connection {
 	private void startComunication() {
 		//
 		// while(true) enviando posição do usuário para o cliente
+		System.out.println("startComunitcaiton");
 		while(true) {
 			
 			String request = receiveRequest();
 			
-			if(request.equals("currentPostion")){
-				
+			if(request.equals("currentPosition")){
 				sendCurrentPosition();
 				
 			}
@@ -115,6 +114,8 @@ public class ClientConnection extends Connection {
 	private String receiveRequest() {
 		try {
 			String request = new String();
+
+			
 			inStream = new ObjectInputStream(clientSocket.getInputStream());
 			request = (String)inStream.readObject();
 			return request;
