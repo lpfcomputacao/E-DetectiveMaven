@@ -70,9 +70,7 @@ public class TrackedConnection extends Connection{
 				inStream = new ObjectInputStream(clientSocket.getInputStream());
 				point = (Point) inStream.readObject();
 				MongoDAO.getInstance().setUserPoint(userIdentifier.getUserEmail(), point);
-
-				outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-				outputStream.writeObject("Recebido");
+				
 
 			} catch (IOException e) {
                 Log.getInstance().writeOnLog("Erro ao receber os pontos do tracked - I/O Exception.", e.getStackTrace());
