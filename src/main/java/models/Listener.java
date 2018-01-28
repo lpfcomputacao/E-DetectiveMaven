@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import log.Log;
+
 public abstract class Listener implements Runnable {
 
 	protected final int PORTA;
@@ -45,8 +47,9 @@ public abstract class Listener implements Runnable {
 				break;
 			}
 			
-		} catch (IOException e) {
-			e.printStackTrace();
+		}catch (IOException e) {
+			Log.getInstance().writeOnLog("não foi possivel inicializar a conexão com o cliente ou com o rastreado",
+					e.getStackTrace());
 		}
 	}
 
@@ -62,8 +65,8 @@ public abstract class Listener implements Runnable {
 			System.out.println("Socket Criado com Sucesso");
 
 		} catch (IOException e) {
-			System.err.println("Não é possível inicizalizar na porta: " + PORTA);
-			System.err.println("Desligando...");
+			Log.getInstance().writeOnLog("Não é possível inicizalizar na porta: " + PORTA, e.getStackTrace());
+			System.err.println("Não é possível inicizalizar na porta: " + PORTA + "\nDesligando...");
 			System.exit(1);
 		}
 	}
@@ -71,8 +74,9 @@ public abstract class Listener implements Runnable {
 	protected void closeSocket() {
 		try {
 			serverSocket.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		}catch (IOException e) {
+			Log.getInstance().writeOnLog("Não foi possivel fechar o socket na porta " + serverSocket.getLocalPort(),
+					e.getStackTrace());
 		}
 	}
 }

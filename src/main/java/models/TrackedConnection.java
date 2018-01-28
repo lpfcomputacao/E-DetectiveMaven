@@ -8,6 +8,7 @@ import java.net.Socket;
 import DAO.MongoDAO;
 import DTO.Point;
 import DTO.UserIdentifier;
+import log.Log;
 import util.DatingBirthday;
 
 
@@ -57,8 +58,8 @@ public class TrackedConnection extends Connection{
 			outputStream.writeObject(date);
 
 		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            Log.getInstance().writeOnLog("Erro ao enviar a data de aniverssário.", e.getStackTrace());
+        }
 
 	}
 
@@ -73,10 +74,13 @@ public class TrackedConnection extends Connection{
 				outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
 				outputStream.writeObject("Recebido");
 
-			} catch (IOException | ClassNotFoundException e) {
-				e.printStackTrace();
-				break;
-			}
+			} catch (IOException e) {
+                Log.getInstance().writeOnLog("Erro ao receber os pontos do tracked - I/O Exception.", e.getStackTrace());
+                break;
+            } catch (ClassNotFoundException e) {
+                Log.getInstance().writeOnLog("Não foi encontrada uma classe Point para receber os pontos do tracked.", e.getStackTrace());
+                break;
+            }
 		}
 	}
 	
@@ -88,10 +92,13 @@ public class TrackedConnection extends Connection{
 			userIdentifier = (UserIdentifier) inStream.readObject();
 			return userIdentifier;
 
-		} catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
-			return null;
-		}
+		} catch (IOException e) {
+            Log.getInstance().writeOnLog("Não foi possível receber dados do cliente.", e.getStackTrace());
+            return null;
+        } catch (ClassNotFoundException e) {
+            Log.getInstance().writeOnLog("Não existe uma classe compatível com UserIdentifier.", e.getStackTrace());
+            return null;
+        }
 	}
 	
 }

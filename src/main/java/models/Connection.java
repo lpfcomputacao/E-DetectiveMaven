@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import DTO.UserIdentifier;
+import log.Log;
 
 public abstract class Connection implements Runnable{
 	
@@ -25,7 +26,7 @@ public abstract class Connection implements Runnable{
 			outputStream =  new ObjectOutputStream(clientSocket.getOutputStream());
 			outputStream.writeObject("Usuario nao cadastrado");
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.getInstance().writeOnLog("Não foi possivel avisar ao usuário que não está cadastrado", e.getStackTrace());
 		}
 	}
 	
