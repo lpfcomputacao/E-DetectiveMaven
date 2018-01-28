@@ -11,7 +11,7 @@ import com.mongodb.client.MongoDatabase;
 
 import DTO.User;
 import DTO.UserIdentifier;
-import util.DatingBirthday;
+import DTO.DatingBirthday;
 import DTO.Point;
 
 public class MongoDAO {

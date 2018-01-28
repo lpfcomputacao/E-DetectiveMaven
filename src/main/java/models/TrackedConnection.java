@@ -6,10 +6,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import DAO.MongoDAO;
+import DTO.DatingBirthday;
 import DTO.Point;
 import DTO.UserIdentifier;
 import log.Log;
-import util.DatingBirthday;
 
 
 public class TrackedConnection extends Connection{
@@ -24,7 +24,6 @@ public class TrackedConnection extends Connection{
 
 	@Override
 	public void run() {
-		
 		while(true) {
 			userIdentifier = receiveUserIdentifier();
 			
@@ -55,6 +54,7 @@ public class TrackedConnection extends Connection{
 			outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
 
 			DatingBirthday date = MongoDAO.getInstance().getDatingBirthdayDB(userIdentifier.getUserEmail());
+			System.out.println(date.getDay());
 			outputStream.writeObject(date);
 
 		} catch (IOException e) {
@@ -90,6 +90,7 @@ public class TrackedConnection extends Connection{
 			inStream = new ObjectInputStream(clientSocket.getInputStream());
 			UserIdentifier userIdentifier = new UserIdentifier();
 			userIdentifier = (UserIdentifier) inStream.readObject();
+			System.out.println(userIdentifier.getUserEmail());
 			return userIdentifier;
 
 		} catch (IOException e) {

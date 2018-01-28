@@ -6,11 +6,11 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import DAO.MongoDAO;
+import DTO.DatingBirthday;
 import DTO.Point;
 import DTO.User;
 import DTO.UserIdentifier;
 import log.Log;
-import util.DatingBirthday;
 
 public class ClientConnection extends Connection {
 

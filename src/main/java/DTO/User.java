@@ -3,8 +3,6 @@ package DTO;
 import java.io.Serializable;
 import java.util.Objects;
 
-import util.DatingBirthday;
-
 public class User implements Serializable{
     /**
      *

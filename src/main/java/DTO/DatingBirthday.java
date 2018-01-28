@@ -1,7 +1,12 @@
-package util;
+package DTO;
+import java.io.Serializable;
 
-public class DatingBirthday {
+public class DatingBirthday implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int year;
 	private int month;
 	private int day;
