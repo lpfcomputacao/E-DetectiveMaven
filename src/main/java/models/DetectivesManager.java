@@ -9,8 +9,8 @@ import DTO.User;
 
 public class DetectivesManager implements Runnable {
 
-	public static HashMap<User, Detective> detectives;
-	private ArrayList<User> userList;
+	public static HashMap<User, Detective> detectives = new HashMap<>();
+	private ArrayList<User> userList = new ArrayList<>();
 	private User newUser;
 	
 	ServerSocket serverSocket;
@@ -19,24 +19,25 @@ public class DetectivesManager implements Runnable {
 
 	@Override
 	public void run() {
-
 		
 		observingNewUser();
 	}
-	private Detective getDetectiveByUser(User user) {
-		return detectives.get(user);
-	}
+	
+	
+	
 	private void observingNewUser() {
+		
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				
+				System.out.println("ae");
 				adderCurrentDBSituation();
 				
 				
 				while (true) {
+					System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 					try {
-						Thread.sleep(30000);
+						Thread.sleep(10000);
 						
 						if(listComparator()) {
 							creatDetective(newUser);
@@ -70,19 +71,25 @@ public class DetectivesManager implements Runnable {
 				userList = MongoDAO.getInstance().returnDBUsers();
 				
 				for (int i = 0; i < userList.size(); i++) {
+					System.out.println(userList.get(i).getEmail());
 					creatDetective(userList.get(i));
 				}
 				
 			}
 			
 			
-		});
+		}).start();
+	}
+	
+	public Detective getDetectiveByEmail (String email) {
+		return detectives.get(MongoDAO.getInstance().getUser(email));
 	}
 
 	private void creatDetective(User user) {
 		Detective detective = new Detective(user);
 		detectives.put(user, detective);
-		new Thread(detective).start();
+		Thread thread = new Thread(detective);
+		thread.start();
 	}
 
 }

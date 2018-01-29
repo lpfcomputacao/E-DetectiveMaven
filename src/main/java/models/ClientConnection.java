@@ -30,6 +30,7 @@ public class ClientConnection extends Connection {
 				userIdentifier = (UserIdentifier) objectX;
 			
 				if(MongoDAO.getInstance().userValidator(userIdentifier)) {
+					userFound();
 					startComunication();
 					break;
 				}else {
@@ -59,10 +60,21 @@ public class ClientConnection extends Connection {
 			}
 			if(request.equals("notification")) {
 				
-				//Aqui meu caro tavinho e com você e deus
-				
+				sendNotification();
 			}
 		}
+	}
+
+	private void sendNotification() {
+		try {
+			outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+			User user = MongoDAO.getInstance().getUser(userIdentifier.getUserEmail());
+			outputStream.writeObject(DetectivesManager.detectives.get(user).getNotificacoes());
+
+		} catch (IOException e) {
+			Log.getInstance().writeOnLog("Não foi possível enviar a posição atual", e.getStackTrace());
+		}
+		
 	}
 
 	private void sendCurrentPosition() {

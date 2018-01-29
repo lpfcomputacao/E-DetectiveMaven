@@ -29,6 +29,14 @@ public abstract class Connection implements Runnable{
 			Log.getInstance().writeOnLog("Não foi possivel avisar ao usuário que não está cadastrado", e.getStackTrace());
 		}
 	}
+	protected void userFound(){
+		try {
+			outputStream =  new ObjectOutputStream(clientSocket.getOutputStream());
+			outputStream.writeObject("Usuario cadastrado");
+		} catch (IOException e) {
+			Log.getInstance().writeOnLog("Não foi possivel avisar ao usuário que não está cadastrado", e.getStackTrace());
+		}
+	}
 	
 	
 	

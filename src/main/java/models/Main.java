@@ -17,13 +17,13 @@ public class Main {
 		
 		TrackedListener trackedListener = new TrackedListener();
 		ClientListener clientListener = new  ClientListener();
-//		DetectivesManager detectiveManager = new DetectivesManager();
+		DetectivesManager detectiveManager = new DetectivesManager();
 		
 		
 		
 		startRunnable(trackedListener);
 		startRunnable(clientListener);
-//		startRunnable(detectiveManager);
+		startRunnable(detectiveManager);
 		
 	}
 	

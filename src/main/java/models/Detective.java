@@ -8,7 +8,7 @@ import DTO.User;
 
 public class Detective implements Runnable {
 	private User user;
-	private ArrayList<String> notificacoes;
+	private ArrayList<String> notificacoes = new ArrayList<>();
 	
 	public Detective(User user) {
 		this.user = user;
@@ -16,7 +16,15 @@ public class Detective implements Runnable {
 	
 	@Override
 	public void run() {
+		System.out.println("Detetive: " + user.getEmail());
 		while(true){
+			
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
 			verificarDistanciaDoMarcador();
 			updateUsuario();
 		}

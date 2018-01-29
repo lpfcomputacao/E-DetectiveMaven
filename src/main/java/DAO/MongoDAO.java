@@ -20,9 +20,9 @@ public class MongoDAO {
 
 	private MongoDAO() {}
 	
-	MongoClient mongo;
-	MongoDatabase database;
-	MongoCollection users;
+	private MongoClient mongo;
+	private MongoDatabase database;
+	private MongoCollection users;
 	
 	private void initializeMongoDB() {
 		mongo = new MongoClient( "localhost" , 27017 );
@@ -48,7 +48,7 @@ public class MongoDAO {
             	return true;
             }
         }
-		
+		mongo.close();
 		return false;
 	}
 	
@@ -76,7 +76,10 @@ public class MongoDAO {
 
 	public void saveNewClient(User newUser) {
 		
-		BasicDBObject User = new BasicDBObject();
+		initializeMongoDB();
+        
+		
+		Document User = new Document();
 		User.put("name", newUser.getName());
 		User.put("password", newUser.getPassword());
 		User.put("email", newUser.getEmail());
@@ -86,19 +89,32 @@ public class MongoDAO {
 		datingDate.put("month", newUser.getDatingDate().getMonth());
 		datingDate.put("day", newUser.getDatingDate().getDay());
 		
-		BasicDBObject point = new BasicDBObject();
-		point.put("latitude", newUser.getMarkerPosition().getX());
-		point.put("longitude", newUser.getMarkerPosition().getY());
+		BasicDBObject markerPoint = new BasicDBObject();
+		markerPoint.put("latitude", newUser.getMarkerPosition().getX());
+		markerPoint.put("longitude", newUser.getMarkerPosition().getY());
 		
 		BasicDBObject currentPoint = new BasicDBObject();
-		point.put("latitude", 0);
-		point.put("longitude", 0);
+		currentPoint.put("latitude", newUser.getCurrentPosition().getX());
+		currentPoint.put("longitude", newUser.getCurrentPosition().getY());
 
 		User.put("datingDate", datingDate);
-		User.put("markerPosition", point);
-		User.put("currentPoint",currentPoint);
-
+		User.put("markerPosition", markerPoint);
+		User.put("currentPosition",currentPoint);
+//		
+//		System.out.println(newUser.getName());
+//		System.out.println(newUser.getPassword());
+//		System.out.println(newUser.getEmail());
+//		System.out.println(newUser.getCurrentPosition().getX());
+//		System.out.println(newUser.getCurrentPosition().getY());
+//		System.out.println(newUser.getMarkerPosition().getX());
+//		System.out.println(newUser.getMarkerPosition().getY());
+//		System.out.println(newUser.getDatingDate().getYear());
+//		System.out.println(newUser.getDatingDate().getDay());
+//		System.out.println(newUser.getDatingDate().getMonth());
+//		
+		
 		users.insertOne(User);
+		mongo.close();
 		
 	}
 
@@ -128,6 +144,7 @@ public class MongoDAO {
             	
             }
         }
+        mongo.close();
 	}
 	
 	public static MongoDAO getInstance() {
@@ -179,7 +196,7 @@ public class MongoDAO {
         
         FindIterable<Document> resultadoDaBusca = users.find();
         User objTeste = new User();
-        ArrayList<User> userList = null;
+        ArrayList<User> userList = new ArrayList<>();
  	
         for (Document document : resultadoDaBusca) {
             objTeste = new Gson().fromJson(document.toJson(), User.class);
