@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  * @author Otávio Lara
  */
 public class Log{
-
+	
     private final static String PATH_LOG = "log/log.edlog";
     private final static String PATH_FULL_LOG = "log/full_log.edlog";
     private Log() {
