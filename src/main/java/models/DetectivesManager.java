@@ -30,12 +30,10 @@ public class DetectivesManager implements Runnable {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("ae");
 				adderCurrentDBSituation();
 				
-				
+				/*
 				while (true) {
-					System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 					try {
 						Thread.sleep(10000);
 						
@@ -47,8 +45,9 @@ public class DetectivesManager implements Runnable {
 						e.printStackTrace();
 					}
 				}
+				*/
 			}
-
+			
 			private boolean listComparator() {
 				ArrayList<User> listAux;
 				listAux = MongoDAO.getInstance().returnDBUsers();
@@ -65,6 +64,10 @@ public class DetectivesManager implements Runnable {
 				}
 				return false;
 			}
+			
+			public Detective getDetectiveByEmail (String email) {
+				return detectives.get(MongoDAO.getInstance().getUser(email));
+			}
 
 			private void adderCurrentDBSituation() {
 				
@@ -76,20 +79,16 @@ public class DetectivesManager implements Runnable {
 				}
 				
 			}
-			
+			private void creatDetective(User user) {
+				Detective detective = new Detective(user);
+				detectives.put(user, detective);
+				Thread thread = new Thread(detective);
+				thread.start();
+			}
 			
 		}).start();
 	}
 	
-	public Detective getDetectiveByEmail (String email) {
-		return detectives.get(MongoDAO.getInstance().getUser(email));
-	}
-
-	private void creatDetective(User user) {
-		Detective detective = new Detective(user);
-		detectives.put(user, detective);
-		Thread thread = new Thread(detective);
-		thread.start();
-	}
+	
 
 }

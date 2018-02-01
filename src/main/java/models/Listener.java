@@ -45,6 +45,11 @@ public abstract class Listener implements Runnable {
 				ClientConnection clientConnection = new ClientConnection(socket);
 				startThreadConnection(clientConnection);
 				break;
+			
+			case 5003:
+				ClientConnectionSignUp clientConnectionSignUp  = new ClientConnectionSignUp(socket);
+				startThreadConnection(clientConnectionSignUp);
+				break;
 			}
 			
 		}catch (IOException e) {

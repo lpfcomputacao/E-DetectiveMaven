@@ -16,22 +16,24 @@ public class Detective implements Runnable {
 	
 	@Override
 	public void run() {
-		System.out.println("Detetive: " + user.getEmail());
+		
 		while(true){
 			
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+			System.out.println("Detetive: " + user.getName());
 			verificarDistanciaDoMarcador();
 			updateUsuario();
+			
+			
 		}
 	}
 	
 	private void updateUsuario() {
-		user = MongoDAO.getInstance().getUser(user.getEmail());
+		user.setCurrentPosition(MongoDAO.getInstance().getcurrentPosition(user.getEmail()));
 	}
 	
 	private void verificarDistanciaDoMarcador() {
@@ -40,7 +42,7 @@ public class Detective implements Runnable {
 		Point marker = user.getMarkerPosition();
 		
 		double distancia = distanciaEuclidiana(currentPosition, marker);
-		
+		System.out.println(distancia + "\n");
 		if( distancia < 50.0) {
 			notificacoes.add("Seu rastreado está a "+distancia+" do marcador ("+marker.getX()+", "+marker.getY()+")");
 		}

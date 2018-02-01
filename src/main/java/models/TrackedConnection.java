@@ -38,6 +38,7 @@ public class TrackedConnection extends Connection{
 			}else {
 				break;
 			}
+			sleepThread();
 		}
 	}
 	
@@ -78,6 +79,7 @@ public class TrackedConnection extends Connection{
                 Log.getInstance().writeOnLog("Não foi encontrada uma classe Point para receber os pontos do tracked.", e.getStackTrace());
                 break;
             }
+			sleepThread();
 		}
 	}
 	
@@ -98,5 +100,15 @@ public class TrackedConnection extends Connection{
             return null;
         }
 	}
+	
+	private void sleepThread() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 }

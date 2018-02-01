@@ -20,6 +20,7 @@ public class ClientConnection extends Connection {
 
 	@Override
 	public void run() {
+		
 		while(true) {
 			
 			Object objectX = receivingObject();
@@ -37,18 +38,11 @@ public class ClientConnection extends Connection {
 					userNotFound();
 				}
 			}
-			
-			
-			if(objectX instanceof String) {
-				User newClient = receiveNewClient();
-				MongoDAO.getInstance().saveNewClient(newClient);
-			}
+			sleepThread();
 		}	
 	}
 	
 	private void startComunication() {
-		//
-		// while(true) enviando posição do usuário para o cliente
 		System.out.println("startComunitcaiton");
 		while(true) {
 			
@@ -58,23 +52,8 @@ public class ClientConnection extends Connection {
 				sendCurrentPosition();
 				
 			}
-			if(request.equals("notification")) {
-				
-				sendNotification();
-			}
+			sleepThread();
 		}
-	}
-
-	private void sendNotification() {
-		try {
-			outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
-			User user = MongoDAO.getInstance().getUser(userIdentifier.getUserEmail());
-			outputStream.writeObject(DetectivesManager.detectives.get(user).getNotificacoes());
-
-		} catch (IOException e) {
-			Log.getInstance().writeOnLog("Não foi possível enviar a posição atual", e.getStackTrace());
-		}
-		
 	}
 
 	private void sendCurrentPosition() {
@@ -89,22 +68,6 @@ public class ClientConnection extends Connection {
 		}
 	}
 
-	private User receiveNewClient() {
-		
-		try {
-			User newUser = new User();
-			inStream = new ObjectInputStream(clientSocket.getInputStream());
-			newUser = (User)inStream.readObject();
-			return newUser;
-			
-		} catch (IOException e) {
-			Log.getInstance().writeOnLog("Não foi possível receber a classe do cliente", e.getStackTrace());
-			return null;
-		} catch (ClassNotFoundException e) {
-			Log.getInstance().writeOnLog("Não foi encontrada uma classe User comaptível com o objeto recebido", e.getStackTrace());
-			return null;
-		}
-	}
 
 	private Object receivingObject() {
 
@@ -139,7 +102,15 @@ public class ClientConnection extends Connection {
 			Log.getInstance().writeOnLog("Classe recebida não compatível com String", e.getStackTrace());
 			return null;
 		}
-		
+	}
+	
+	private void sleepThread() {
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	
 	}
 	
 }
